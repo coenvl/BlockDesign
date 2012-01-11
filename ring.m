@@ -6,6 +6,8 @@ function p = ring(radius)
 % translate the ring, you simply add the translation to any of the
 % columns.
 %
+% see also: SQUARE SPHERE
+%
 % Coen van Leeuwen
 % Jan 8, 2012
 
@@ -23,6 +25,8 @@ for x = start:radius
         end
     end
 end
+
+p = unique(p, 'rows');
 
 % Note: Actually we should be able to calculate Y, and perhaps also for the
 % other values. The problem however is that the equation may be true for

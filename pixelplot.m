@@ -1,5 +1,5 @@
-function num = pixelplot(p, color, res, linewidth)
-% num = pixelplot3(p, color, res, linewidth)
+function blocks = pixelplot(p, color, res, linewidth)
+% num = pixelplot(p, color, res, linewidth)
 % Part of the BlockDesign toolbox
 %
 % This function plots a 3D design of the points in p. For each point a cube
@@ -15,6 +15,8 @@ function num = pixelplot(p, color, res, linewidth)
 % a variation of grey shades, the default resolution is 1 and the linewidth
 % is .1
 %
+% See also: PIXELPLOT3
+%
 % Coen van Leeuwen
 % Jan 7, 2012
 
@@ -23,7 +25,7 @@ if nargin < 2 || isempty(color)
 end
 
 if nargin < 3 || isempty(res)
-    res = 1;
+    res = 1
 end
 
 if nargin < 4 || isempty(linewidth)
@@ -33,6 +35,8 @@ end
 xPix = res * [0 0 1 1];
 yPix = res * [0 1 1 0];
 
+p = unique(p, 'rows');
+
 blocks = size(p,1);
 
 X = p(:,1) * ones(1,4) + ones(blocks, 1) * xPix;
@@ -41,14 +45,12 @@ Y = p(:,2) * ones(1,4) + ones(blocks, 1) * yPix;
 
 patch(X', Y', zeros(size(X))', color, 'lineWidth', linewidth);   %Top
 
-num = size(p, 1);
-
 axis equal;
 
 xlim([min(p(:,1)) max(p(:,1)) + 1]);
 ylim([min(p(:,2)) max(p(:,2)) + 1]);
 
-title(['Number of blocks: ' num2str(num)]);
+title(['Number of blocks: ' num2str(blocks)]);
 
 end
 

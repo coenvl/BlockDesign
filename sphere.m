@@ -26,6 +26,8 @@ for z = start:radius
     end
 end
 
+p = unique(p, 'rows');
+
 % Note: Actually we should be able to calculate Y, and perhaps also for the
 % other values. The problem however is that the equation may be true for
 % multiple values of Y, creating a set of block next to eachother within 

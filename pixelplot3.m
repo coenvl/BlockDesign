@@ -1,4 +1,4 @@
-function num = pixelplot3(p, color, res, linewidth)
+function blocks = pixelplot3(p, color, res, linewidth)
 % num = pixelplot3(p, color, res, linewidth)
 % Part of the BlockDesign toolbox
 %
@@ -14,6 +14,8 @@ function num = pixelplot3(p, color, res, linewidth)
 % Note that all arguments but the first are optional. The default color is
 % a variation of grey shades, the default resolution is 1 and the linewidth
 % is .1
+%
+% See also: PIXELPLOT
 %
 % Coen van Leeuwen
 % Jan 7, 2012
@@ -46,6 +48,8 @@ xPixC = zPixA;
 yPixC = yPixA;
 zPixC = xPixA;
 
+p = unique(p, 'rows');
+
 blocks = size(p,1);
 
 XA = p(:,1) * ones(1,4) + ones(blocks, 1) * xPixA;
@@ -60,6 +64,11 @@ XC = p(:,1) * ones(1,4) + ones(blocks, 1) * xPixC;
 YC = p(:,2) * ones(1,4) + ones(blocks, 1) * yPixC;
 ZC = p(:,3) * ones(1,4) + ones(blocks, 1) * zPixC;
 
+try
+    set(gcf, 'renderer', 'opengl')
+catch ME
+    fprintf('Unable to select OpenGL');
+end
 
 patch(XA', YA', ZA'+1, color(1,:), 'lineWidth', linewidth);   %Top
 patch(XA', YA', ZA', color(2,:), 'lineWidth', linewidth);     %Bottom
@@ -70,8 +79,6 @@ patch(XB', YB', ZB', color(4,:), 'lineWidth', linewidth);     %Back
 patch(XC'+1, YC', ZC', color(5,:), 'lineWidth', linewidth);   %Left
 patch(XC', YC', ZC', color(6,:), 'lineWidth', linewidth);     %Right
 
-num = size(p, 1);
-
 axis equal;
 view([1 1 1]);
 
@@ -79,7 +86,7 @@ xlim([min(p(:,1)) max(p(:,1)) + 1]);
 ylim([min(p(:,2)) max(p(:,2)) + 1]);
 zlim([min(p(:,3)) max(p(:,3)) + 1]);
 
-title(['Number of blocks: ' num2str(num)]);
+title(['Number of blocks: ' num2str(blocks)]);
 
 end
 
