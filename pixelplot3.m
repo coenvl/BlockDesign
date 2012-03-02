@@ -70,6 +70,8 @@ catch ME
     fprintf('Unable to select OpenGL');
 end
 
+clf;
+
 patch(XA', YA', ZA'+1, color(1,:), 'lineWidth', linewidth);   %Top
 patch(XA', YA', ZA', color(2,:), 'lineWidth', linewidth);     %Bottom
 

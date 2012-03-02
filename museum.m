@@ -1,36 +1,26 @@
-radius = 5;
+radius = 100;
+pillarheight = 5;
 
 figure(1)
 clf;
 hold on;
 
-p = [];
-for z = 0 %:radius
-    for x = 0:radius
-        for y = 0:radius
-            if abs((x^2) + (y^2) + (z^2) - (radius^2)) <= radius
-                p = [p; [x y z]; [x -y z]; [-x y z]; [-x -y z]; [x y -z]; [x -y -z]; [-x y -z]; [-x -y -z]];
-            end
-        end
-    end
-end
-
-p = unique(p, 'rows');
+p = ring(radius);
 
 pixelplot3(p);
 
-% npillars = 24;
-% 
-% pA = 2*pi/npillars;
-% pillarAlpha = -pi:pA:pi;
-% pillarAlpha = pillarAlpha + pi/npillars;
-% 
-% p2 = radius .* [sin(pillarAlpha)' cos(pillarAlpha)'];
-% p2 = [p2 repmat(1, size(p2,1), 1)];
-% p2 = round(p2);
-% 
-% pixelplot3(p2, 1, 'b');
-% 
+npillars = 24;
+
+pA = 2*pi/npillars;
+pillarAlpha = -pi:pA:pi;
+pillarAlpha = pillarAlpha + pi/npillars;
+
+pbase = round(radius .* [sin(pillarAlpha)' cos(pillarAlpha)']);
+
+p2 = [repmat(pbase, pillarheight, 1) reshape(repmat(1:pillarheight,size(pbase, 1), 1),[],1)];
+
+pixelplot3(p2);
+
 % xybottom = p(p(:,3) == 0,1:2);
 % 
 % p3 = [];
@@ -56,10 +46,4 @@ pixelplot3(p);
 % 
 % pixelplot3(p3);
 
-xlim([-radius radius]);
-ylim([-radius radius]);
-zlim([-radius radius]);
-
-title(sprintf('Sphere with radius %d, %d blocks', radius, size(p,1)));
-
-print(gcf, '-dpng', '-r300', sprintf('museumbottom_r%d_p%d.png', radius, npillars));
+% print(gcf, '-dpng', '-r300', sprintf('museumbottom_r%d_p%d.png', radius, npillars));

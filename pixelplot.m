@@ -42,6 +42,7 @@ blocks = size(p,1);
 X = p(:,1) * ones(1,4) + ones(blocks, 1) * xPix;
 Y = p(:,2) * ones(1,4) + ones(blocks, 1) * yPix;
 
+clf;
 
 patch(X', Y', zeros(size(X))', color, 'lineWidth', linewidth);   %Top
 
