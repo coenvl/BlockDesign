@@ -25,7 +25,7 @@ if nargin < 2 || isempty(color)
 end
 
 if nargin < 3 || isempty(res)
-    res = 1
+    res = 1;
 end
 
 if nargin < 4 || isempty(linewidth)
@@ -39,10 +39,12 @@ p = unique(p, 'rows');
 
 blocks = size(p,1);
 
+if blocks == 0
+    return;
+end
+
 X = p(:,1) * ones(1,4) + ones(blocks, 1) * xPix;
 Y = p(:,2) * ones(1,4) + ones(blocks, 1) * yPix;
-
-clf;
 
 patch(X', Y', zeros(size(X))', color, 'lineWidth', linewidth);   %Top
 
